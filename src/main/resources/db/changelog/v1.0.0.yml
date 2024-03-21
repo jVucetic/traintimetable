@@ -1,0 +1,163 @@
+databaseChangeLog:
+- logicalFilePath: v1.0.0.yml
+
+- changeSet:
+    id: _user
+    author: jVucetic
+    changes:
+      - createTable:
+          tableName: _user
+          columns:
+            - column:
+                name: id
+                type: BIGINT
+                constraints:
+                  primaryKey: true
+                  primaryKeyName: _user_pkey
+            - column:
+                name: first_name
+                type: VARCHAR(35)
+                constraints:
+                  nullable: false
+            - column:
+                name: last_name
+                type: VARCHAR(35)
+                constraints:
+                  nullable: false
+            - column:
+                name: email
+                type: VARCHAR(100)
+                constraints:
+                  nullable: false
+            - column:
+                name: password
+                type: VARCHAR(255)
+                constraints:
+                  nullable: false
+            - column:
+                name: role
+                type: VARCHAR(35)
+                constraints:
+                  nullable: false
+- changeSet:
+    id: train
+    author: jVucetic
+    changes:
+      - createTable:
+          tableName: train
+          columns:
+            - column:
+                name: id
+                type: BIGINT
+                constraints:
+                  primaryKey: true
+                  primaryKeyName: train_pkey
+            - column:
+                name: name
+                type: VARCHAR(35)
+                constraints:
+                  nullable: false
+            - column:
+                name: capacity
+                type: INT
+                constraints:
+                  nullable: false
+            - column:
+                name: description
+                type: VARCHAR(255)
+            - column:
+                name: serial_number
+                type: INT
+                constraints:
+                  nullable: false
+            - column:
+                name: manufacturer
+                type: VARCHAR(35)
+- changeSet:
+    id: timetable
+    author: jVucetic
+    changes:
+      - createTable:
+          tableName: timetable
+          columns:
+            - column:
+                name: id
+                type: BIGINT
+                constraints:
+                  primaryKey: true
+                  primaryKeyName: timetable_pkey
+            - column:
+                name: from_location
+                type: VARCHAR(35)
+                constraints:
+                  nullable: false
+            - column:
+                name: to_location
+                type: VARCHAR(35)
+                constraints:
+                  nullable: false
+            - column:
+                name: departure_time
+                type: DATE
+                constraints:
+                  nullable: false
+            - column:
+                name: arrival_time
+                type: DATE
+            - column:
+                name: train_id
+                type: BIGINT
+                constraints:
+                  nullable: false
+                  foreignKeyName: timetable_train_id_fk
+                  referencedTableName: train
+                  referencedColumnNames: id
+- changeSet:
+    id: booking
+    author: jVucetic
+    changes:
+      - createTable:
+          tableName: booking
+          columns:
+            - column:
+                name: id
+                type: BIGINT
+                constraints:
+                  primaryKey: true
+                  primaryKeyName: booking_pkey
+            - column:
+                name: is_reserved
+                type: BOOLEAN
+            - column:
+                name: user_id
+                type: BIGINT
+                constraints:
+                  nullable: false
+                  foreignKeyName: booking_user_id_fk
+                  referencedTableName: _user
+                  referencedColumnNames: id
+            - column:
+                name: timetable_id
+                type: BIGINT
+                constraints:
+                  nullable: false
+                  foreignKeyName: booking_timetable_id_fk
+                  referencedTableName: timetable
+                  referencedColumnNames: id
+- changeSet:
+    id: Add initial data
+    author: jVucetic
+    changes:
+      - sql:
+          dbms: postgresql
+          sql: |-
+            INSERT INTO _user (id, first_name, last_name, email, password, role) VALUES (1, 'John', 'Doe', 'john@example.com', 'password123', 'USER');
+            INSERT INTO _user (id, first_name, last_name, email, password, role) VALUES (2, 'Alice', 'Smith', 'alice@example.com', 'password456', 'ADMIN');
+            INSERT INTO train (id, name, capacity, description, serial_number, manufacturer) VALUES (1, 'Express', 200, 'High-speed train', 12345, 'ABC Trains');
+            INSERT INTO train (id, name, capacity, description, serial_number, manufacturer) VALUES (2, 'Local', 100, 'Commuter train', 67890, 'XYZ Railways');
+            INSERT INTO timetable (id, from_location, to_location, departure_time, arrival_time, train_id) VALUES (1, 'New York', 'Chicago', '2024-03-21 08:00:00', '2024-03-21 12:00:00', 1);
+            INSERT INTO timetable (id, from_location, to_location, departure_time, arrival_time, train_id) VALUES (2, 'Chicago', 'Los Angeles', '2024-03-21 13:00:00', '2024-03-21 18:00:00', 2);
+            INSERT INTO booking (id, user_id, timetable_id, is_reserved) VALUES (1, 1, 1, true);
+            INSERT INTO booking (id, user_id, timetable_id, is_reserved) VALUES (2, 2, 2, false);
+    
+     

@@ -27,20 +27,20 @@ To get a local copy up and running, follow these simple steps:
 
 1. Clone the repository:
 
-   ```sh
+   ```
    git clone https://github.com/jVucetic/traintimetable.git
 2. Navigate to the project directory:
 
-    ```sh
+    ```
     cd traintimetable
 
 3. Build the project using Gradle:
 
-   ```sh
+   ```
    ./gradlew build
 4. Run the application:
 
-   ```sh
+   ```
    ./gradlew bootRun
    
 5. Access the application in your browser at http://localhost:8080.

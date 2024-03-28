@@ -18,9 +18,10 @@ import java.util.UUID;
 @Slf4j
 @Order(3)
 public class TimetableSeeder implements CommandLineRunner {
-
     private final TimetableRepository timetableRepository;
     private final TrainRepository trainRepository;
+    private static final UUID  UUID_1 = UUID.fromString("00000000-0000-0000-0000-000000000001");
+    private static final UUID  UUID_2 = UUID.fromString("00000000-0000-0000-0000-000000000002");
 
     @Override
     public void run(String... args) {
@@ -29,26 +30,31 @@ public class TimetableSeeder implements CommandLineRunner {
     }
 
     private void insertTestData() {
-        Train train1 = trainRepository.findById(UUID.fromString("00000000-0000-0000-0000-000000000001")).orElseThrow();
-        Train train2 = trainRepository.findById(UUID.fromString("00000000-0000-0000-0000-000000000002")).orElseThrow();
+        if( timetableRepository.count() == 0) {
+            Train train1 = trainRepository.findById(UUID_1).orElseThrow();
+            Train train2 = trainRepository.findById(UUID_2).orElseThrow();
 
-        Timetable timetable1 = Timetable.builder()
-                .fromLocation("New York")
-                .toLocation("Chicago")
-                .departureTime(LocalDateTime.parse("2024-03-21T08:00:00"))
-                .arrivalTime(LocalDateTime.parse("2024-03-21T12:00:00"))
-                .train(train1)
-                .build();
+            Timetable timetable1 = Timetable.builder()
+                    .id(UUID_1)
+                    .fromLocation("New York")
+                    .toLocation("Chicago")
+                    .departureTime(LocalDateTime.parse("2024-03-21T08:00:00"))
+                    .arrivalTime(LocalDateTime.parse("2024-03-21T12:00:00"))
+                    .train(train1)
+                    .build();
 
-        Timetable timetable2 = Timetable.builder()
-                .fromLocation("Chicago")
-                .toLocation("Los Angeles")
-                .departureTime(LocalDateTime.parse("2024-03-21T13:00:00"))
-                .arrivalTime(LocalDateTime.parse("2024-03-21T18:00:00"))
-                .train(train2)
-                .build();
+            Timetable timetable2 = Timetable.builder()
+                    .id(UUID_2)
+                    .fromLocation("Chicago")
+                    .toLocation("Los Angeles")
+                    .departureTime(LocalDateTime.parse("2024-03-21T13:00:00"))
+                    .arrivalTime(LocalDateTime.parse("2024-03-21T18:00:00"))
+                    .train(train2)
+                    .build();
 
-        timetableRepository.save(timetable1);
-        timetableRepository.save(timetable2);
+            timetableRepository.save(timetable1);
+            timetableRepository.save(timetable2);
+        }
+
     }
 }

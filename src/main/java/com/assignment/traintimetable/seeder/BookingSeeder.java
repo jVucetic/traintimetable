@@ -22,6 +22,8 @@ public class BookingSeeder implements CommandLineRunner {
     private final TimetableRepository timetableRepository;
     private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
+    private static final UUID  UUID_1 = UUID.fromString("00000000-0000-0000-0000-000000000001");
+    private static final UUID  UUID_2 = UUID.fromString("00000000-0000-0000-0000-000000000002");
 
     @Override
     public void run(String... args) {
@@ -30,23 +32,28 @@ public class BookingSeeder implements CommandLineRunner {
     }
 
     private void insertTestData() {
-        Timetable timetable1 = timetableRepository.findById(UUID.fromString("00000000-0000-0000-0000-000000000001")).orElseThrow();
-        Timetable timetable2 = timetableRepository.findById(UUID.fromString("00000000-0000-0000-0000-000000000002")).orElseThrow();
+        if( bookingRepository.count() == 0) {
+            Timetable timetable1 = timetableRepository.findById(UUID_1).orElseThrow();
+            Timetable timetable2 = timetableRepository.findById(UUID_2).orElseThrow();
 
-        User user1 = userRepository.findById(UUID.fromString("00000000-0000-0000-0000-000000000001")).orElseThrow();
-        User user2 = userRepository.findById(UUID.fromString("00000000-0000-0000-0000-000000000002")).orElseThrow();
+            User user1 = userRepository.findById(UUID_1).orElseThrow();
+            User user2 = userRepository.findById(UUID_2).orElseThrow();
 
-        Booking booking1 = Booking.builder()
-                .user(user1)
-                .timetable(timetable1)
-                .build();
+            Booking booking1 = Booking.builder()
+                    .id(UUID_1)
+                    .user(user1)
+                    .timetable(timetable1)
+                    .build();
 
-        Booking booking2 = Booking.builder()
-                .user(user2)
-                .timetable(timetable2)
-                .build();
+            Booking booking2 = Booking.builder()
+                    .id(UUID_2)
+                    .user(user2)
+                    .timetable(timetable2)
+                    .build();
 
-        bookingRepository.save(booking1);
-        bookingRepository.save(booking2);
+            bookingRepository.save(booking1);
+            bookingRepository.save(booking2);
+        }
+
     }
 }

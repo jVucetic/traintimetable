@@ -1,6 +1,5 @@
 package com.assignment.traintimetable.controller;
 
-import com.assignment.traintimetable.dto.request.BookingRequest;
 import com.assignment.traintimetable.model.Train;
 import com.assignment.traintimetable.service.impl.TrainServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/trains")
@@ -40,26 +40,26 @@ public class TrainController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Train> getTrainById(@PathVariable("id") Long trainId) {
+    public ResponseEntity<Train> getTrainById(@PathVariable("id") UUID trainId) {
         Train train = trainService.getTrainById(trainId);
 
         return ResponseEntity.ok(train);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Train> updateTrain(@PathVariable("id") Long trainId,
+    public ResponseEntity<Train> updateTrain(@PathVariable("id") UUID trainId,
                                              @RequestBody Train train) {
         Train updatedTrain = trainService.updateTrain(train);
         return ResponseEntity.ok(updatedTrain);
     }
 
     @DeleteMapping("{id}")
-    public void deleteTrain(@PathVariable("id") Long trainId) {
+    public void deleteTrain(@PathVariable("id") UUID trainId) {
         trainService.deleteTrain(trainId);
     }
 
     @PostMapping("/timetable/{timetableId}/book")
-    public void book(@PathVariable("timetableId") Long timetableId) {
+    public void book(@PathVariable("timetableId") UUID timetableId) {
         trainService.book(timetableId);
     }
 

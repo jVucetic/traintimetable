@@ -2,13 +2,14 @@ package com.assignment.traintimetable.dto.request;
 
 import lombok.Getter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 public class TimetableRequestDto {
+    private UUID trainId;
     private String fromLocation;
     private String toLocation;
-    private Date departureTime;
-    private Date arrivalTime;
-    private Long trainId;
+    private LocalDateTime departureTime;
+    private LocalDateTime arrivalTime;
 }

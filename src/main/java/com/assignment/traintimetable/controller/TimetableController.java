@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/timetables")
@@ -39,21 +40,21 @@ public class TimetableController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Timetable> getTimetableById(@PathVariable("id") Long timetableId) {
+    public ResponseEntity<Timetable> getTimetableById(@PathVariable("id") UUID timetableId) {
         Timetable Timetable = timetableService.getTimetableById(timetableId);
 
         return ResponseEntity.ok(Timetable);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Timetable> updateTimetable(@PathVariable("id") Long timetableId,
+    public ResponseEntity<Timetable> updateTimetable(@PathVariable("id") UUID timetableId,
                                              @RequestBody Timetable timetable) {
         Timetable updatedTimetable = timetableService.updateTimetable(timetable);
         return ResponseEntity.ok(updatedTimetable);
     }
 
     @DeleteMapping("{id}")
-    public void deleteTimetable(@PathVariable("id") Long TimetableId) {
+    public void deleteTimetable(@PathVariable("id") UUID TimetableId) {
         timetableService.deleteTimetable(TimetableId);
     }
 }

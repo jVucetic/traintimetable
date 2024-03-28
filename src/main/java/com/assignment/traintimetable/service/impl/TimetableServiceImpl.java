@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +37,7 @@ public class TimetableServiceImpl implements TimetableService {
     }
 
     @Override
-    public Timetable getTimetableById(Long timetableId) {
+    public Timetable getTimetableById(UUID timetableId) {
         return timetableRepository.findById(timetableId).orElseThrow();
     }
 
@@ -51,7 +52,7 @@ public class TimetableServiceImpl implements TimetableService {
     }
 
     @Override
-    public void deleteTimetable(Long timetableId) {
+    public void deleteTimetable(UUID timetableId) {
         timetableRepository.deleteById(timetableId);
     }
 }

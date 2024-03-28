@@ -1,31 +1,27 @@
 package com.assignment.traintimetable.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.assignment.traintimetable.util.UUIDGenerator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "train")
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Train {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id", unique = true, nullable = false, updatable = false)
+    private UUID id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -41,4 +37,15 @@ public class Train {
 
     @Column(name = "manufacturer")
     private String manufacturer;
+
+    @Builder
+    public Train(UUID id, String name, Integer capacity, String description, Integer serialNumber, String manufacturer) {
+        this.id = id != null ? id : UUIDGenerator.generateUUID();
+        this.name = name;
+        this.capacity = capacity;
+        this.description = description;
+        this.serialNumber = serialNumber;
+        this.manufacturer = manufacturer;
+    }
+
 }

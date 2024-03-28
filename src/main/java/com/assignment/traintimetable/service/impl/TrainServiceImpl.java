@@ -1,6 +1,5 @@
 package com.assignment.traintimetable.service.impl;
 
-import com.assignment.traintimetable.dto.request.BookingRequest;
 import com.assignment.traintimetable.exception.TimetableNotFoundException;
 import com.assignment.traintimetable.exception.TrainNotFoundException;
 import com.assignment.traintimetable.model.Booking;
@@ -15,8 +14,8 @@ import com.assignment.traintimetable.util.Auth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Book;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +36,7 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public Train getTrainById(Long trainId) {
+    public Train getTrainById(UUID trainId) {
         return trainRepository.findById(trainId).orElseThrow(() -> new TrainNotFoundException(trainId));
     }
 
@@ -53,12 +52,12 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public void deleteTrain(Long trainId) {
+    public void deleteTrain(UUID trainId) {
         trainRepository.deleteById(trainId);
     }
 
     @Override
-    public void book(Long timetableId) {
+    public void book(UUID timetableId) {
         Timetable timetable = timetableRepository.findById(timetableId)
                 .orElseThrow(() -> new TimetableNotFoundException(timetableId));
         User user = auth.getPrincipal();

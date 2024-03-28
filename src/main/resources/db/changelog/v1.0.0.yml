@@ -10,10 +10,11 @@ databaseChangeLog:
           columns:
             - column:
                 name: id
-                type: BIGINT
+                type: UUID
                 constraints:
                   primaryKey: true
                   primaryKeyName: _user_pkey
+                  nullable: false
             - column:
                 name: first_name
                 type: VARCHAR(35)
@@ -48,7 +49,7 @@ databaseChangeLog:
           columns:
             - column:
                 name: id
-                type: BIGINT
+                type: UUID
                 constraints:
                   primaryKey: true
                   primaryKeyName: train_pkey
@@ -82,7 +83,7 @@ databaseChangeLog:
           columns:
             - column:
                 name: id
-                type: BIGINT
+                type: UUID
                 constraints:
                   primaryKey: true
                   primaryKeyName: timetable_pkey
@@ -98,15 +99,15 @@ databaseChangeLog:
                   nullable: false
             - column:
                 name: departure_time
-                type: DATE
+                type: DATETIME
                 constraints:
                   nullable: false
             - column:
                 name: arrival_time
-                type: DATE
+                type: DATETIME
             - column:
                 name: train_id
-                type: BIGINT
+                type: UUID
                 constraints:
                   nullable: false
                   foreignKeyName: timetable_train_id_fk
@@ -121,7 +122,7 @@ databaseChangeLog:
           columns:
             - column:
                 name: id
-                type: BIGINT
+                type: UUID
                 constraints:
                   primaryKey: true
                   primaryKeyName: booking_pkey
@@ -130,7 +131,7 @@ databaseChangeLog:
                 type: BOOLEAN
             - column:
                 name: user_id
-                type: BIGINT
+                type: UUID
                 constraints:
                   nullable: false
                   foreignKeyName: booking_user_id_fk
@@ -138,26 +139,9 @@ databaseChangeLog:
                   referencedColumnNames: id
             - column:
                 name: timetable_id
-                type: BIGINT
+                type: UUID
                 constraints:
                   nullable: false
                   foreignKeyName: booking_timetable_id_fk
                   referencedTableName: timetable
                   referencedColumnNames: id
-- changeSet:
-    id: Add initial data
-    author: jVucetic
-    changes:
-      - sql:
-          dbms: postgresql
-          sql: |-
-            INSERT INTO _user (id, first_name, last_name, email, password, role) VALUES (1, 'John', 'Doe', 'john@example.com', 'password123', 'USER');
-            INSERT INTO _user (id, first_name, last_name, email, password, role) VALUES (2, 'Alice', 'Smith', 'alice@example.com', 'password456', 'ADMIN');
-            INSERT INTO train (id, name, capacity, description, serial_number, manufacturer) VALUES (1, 'Express', 200, 'High-speed train', 12345, 'ABC Trains');
-            INSERT INTO train (id, name, capacity, description, serial_number, manufacturer) VALUES (2, 'Local', 100, 'Commuter train', 67890, 'XYZ Railways');
-            INSERT INTO timetable (id, from_location, to_location, departure_time, arrival_time, train_id) VALUES (1, 'New York', 'Chicago', '2024-03-21 08:00:00', '2024-03-21 12:00:00', 1);
-            INSERT INTO timetable (id, from_location, to_location, departure_time, arrival_time, train_id) VALUES (2, 'Chicago', 'Los Angeles', '2024-03-21 13:00:00', '2024-03-21 18:00:00', 2);
-            INSERT INTO booking (id, user_id, timetable_id, is_reserved) VALUES (1, 1, 1, true);
-            INSERT INTO booking (id, user_id, timetable_id, is_reserved) VALUES (2, 2, 2, false);
-    
-     

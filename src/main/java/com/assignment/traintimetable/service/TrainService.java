@@ -1,20 +1,20 @@
 package com.assignment.traintimetable.service;
 
-import com.assignment.traintimetable.dto.request.BookingRequest;
 import com.assignment.traintimetable.model.Train;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface TrainService {
     List<Train> getAll();
 
     Train createTrain(Train train);
 
-    Train getTrainById(Long trainId);
+    Train getTrainById(UUID trainId);
 
     Train updateTrain(Train train);
 
-    void deleteTrain(Long id);
+    void deleteTrain(UUID id);
 
-    void book(Long timetableId);
+    void book(UUID timetableId);
 }

@@ -48,4 +48,4 @@ jobs:
           port: 22
           script: |
             sudo chmod 666 /var/run/docker.sock
-            docker pull traintimetable-${{ github.sha }}:latest
+            docker pull ${{ secrets.DOCKER_USERNAME }}/traintimetable-${{ github.sha }}:latest

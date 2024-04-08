@@ -62,11 +62,21 @@ public class TrainServiceImpl implements TrainService {
                 .orElseThrow(() -> new TimetableNotFoundException(timetableId));
         User user = auth.getPrincipal();
 
+        
+
+        boolean isReserved = false;
+        //if exist departure time earlier than passed save a reservation
+        Timetable firstDeparture = timetableRepository.findMinimalDepartureTime();
+        if ( firstDeparture.getDepartureTime().isBefore(timetable.getDepartureTime())) {
+            isReserved = true;
+        }
+
         Booking booking = Booking.builder()
                 .user(user)
                 .timetable(timetable)
-                .isReserved(false)
+                .isReserved(isReserved)
                 .build();
+
 
         bookingRepository.save(booking);
     }

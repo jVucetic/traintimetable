@@ -47,5 +47,4 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           port: 22
           script: |
-            sudo chmod 666 /var/run/docker.sock
             docker pull ${{ secrets.DOCKER_USERNAME }}/traintimetable-${{ github.sha }}:latest

@@ -47,4 +47,5 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           port: 22
           script: |
+            docker login
             docker pull traintimetable-${{ github.sha }}:latest

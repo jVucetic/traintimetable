@@ -48,3 +48,6 @@ jobs:
           port: 22
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/traintimetable-${{ github.sha }}:latest
+            docker stop traintimetable_server
+            docker rm traintimetable_server
+            docker run --detach --name traintimetable_server -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/traintimetable-${{ github.sha }}:latest

@@ -40,7 +40,7 @@ jobs:
         run: docker push ${{ secrets.DOCKER_USERNAME }}/traintimetable-${{ github.sha }}:latest
 
       - name: SSH into EC2 instance and pull latest Docker image
-        uses: appleboy/ssh-action@mastererr: permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/images/create?fromImage=traintimetable-3be6dfdfa4f186268131a67ade1ff01f298c40b1&tag=latest": dial unix /var/run/docker.sock: connect: permission denied
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
